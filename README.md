@@ -1,1 +1,1 @@
-# chess-system-java
+                                    Project of a chess game using Java  
