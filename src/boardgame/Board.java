@@ -1,5 +1,7 @@
 package boardgame;
 
+import javax.swing.text.Position;
+
 public class Board {
 	
 	
@@ -36,6 +38,13 @@ public class Board {
 	
 	public Piece piece(boardgame.position position) {
 		return pieces[position.getRow()][position.getColumn()];
+	}
+	
+	public void placePiece(Piece piece, position position) {
+		pieces[position.getRow()][position.getColumn()] =  piece;
+		
+		piece.position = position;
+		
 	}
 	
 	
