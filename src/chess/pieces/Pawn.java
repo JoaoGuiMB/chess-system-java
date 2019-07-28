@@ -2,14 +2,18 @@ package chess.pieces;
 
 import boardgame.Board;
 import boardgame.position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 
 public class Pawn extends ChessPiece{
 
-	public Pawn(Board board, Color color) {
+	
+	private ChessMatch chessMatch;
+	
+	public Pawn(Board board, Color color,ChessMatch chessMatch) {
 		super(board, color);
-		
+		this.chessMatch = chessMatch;
 	}
 
 	@Override
@@ -42,6 +46,18 @@ public class Pawn extends ChessPiece{
 				
 			}
 			
+			//SpecialMove EnPassant white
+			if(position.getRow() == 3) {
+				position left = new position(position.getRow(),position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() - 1][left.getColumn()] = true;
+				}
+				position right = new position(position.getRow(),position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() - 1][right.getColumn()] = true;
+				}
+			}
+			
 		}
 		else {
 			p.setValues(position.getRow() + 1,position.getColumn());
@@ -64,6 +80,17 @@ public class Pawn extends ChessPiece{
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 				
+			}
+			//SpecialMove Enpassant black
+			if(position.getRow() == 4) {
+				position left = new position(position.getRow(),position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() + 1][left.getColumn()] = true;
+				}
+				position right = new position(position.getRow(),position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() + 1][right.getColumn()] = true;
+				}
 			}
 			
 		}	
